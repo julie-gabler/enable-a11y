@@ -21,6 +21,9 @@
 # 102 - pa11y returned errors
 #######################################################################
 
+echo "PATH is $PATH"
+which axe
+
 VNU_JAR="node_modules/vnu-jar/build/dist/vnu.jar"
 VNU_CMD="java -jar $VNU_JAR"
 
