@@ -483,6 +483,16 @@ function runLighthouseTests() {
 	node bin/lighthouse-accessibility-scan.js
 }
 
+if [ "$#" = "1" ]
+then
+	TYPE="$1"
+	FILES="${@:2}"
+elif [ "$#" = "0" ]
+then
+	TYPE="all"
+	FILES="$*"
+fi
+
 
 #.. let's wipe the tmp directory if it exists
 if [ -z "$(ls -A tmp)" ]
@@ -490,24 +500,26 @@ then
 	rm tmp/*
 fi
 
+#.. Run checks and preparation for tests
+bin/generateSiteMap.sh
+downloadHTML
+
+
 #.. Run specific tests based on the argument passed in when running this script
-if [ "$1" = "vnu" ]
+if [ "$TYPE" = "vnu" ]
 then
 	runVNUTests
-elif [ "$1" = "axe" ]
+elif [ "$TYPE" = "axe" ]
 then
 	runAXETests
-elif [ "$1" = "pa11y" ]
+elif [ "$TYPE" = "pa11y" ]
 then
 	runPa11yTests
-elif [ "$1" = "lighthouse" ]
+elif [ "$TYPE" = "lighthouse" ]
 then
 	runLighthouseTests
-else
-	#.. Run checks and preparation for tests
-	bin/generateSiteMap.sh
-	downloadHTML
-
+elif [ "$TYPE" = "all" ]
+then
 	#.. Run all tests
 	runVNUTests
 	runAXETests
@@ -517,3 +529,5 @@ else
 	#.. Remove temporary files on success
 	rm tmp/* 2> /dev/null
 fi
+
+echo "DOWNLOADED_URLS: $DOWNLOADED_URLS"
