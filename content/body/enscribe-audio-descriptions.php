@@ -33,7 +33,7 @@
 
 </div>
 
-<?php includeShowcode("enscribe-html5-example", headingLevel: 4) ?>
+<?php includeShowcode("enscribe-html5-example", headingLevel: 4); ?>
 <script type="application/json" id="enscribe-html5-example-props">
 {
     "replaceHtmlRules": {
@@ -82,7 +82,7 @@
 
 
     <iframe title="Vimeo Video Example" id="vimeo-example-video" class="enable-video" data-enscribe="vimeo" data-enscribe-global-pause="true"
-        data-enscribe-vtt-path="../vtt/bela-ad.en.vtt"
+        data-enscribe-vtt-path="vtt/bela-ad.en.vtt"
         src="https://player.vimeo.com/video/1115565292?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" 
         allowfullscreen allow="autoplay; encrypted-media"></iframe>
     
@@ -137,7 +137,7 @@
 
 <div id="youtube-example" class="enable-example">
     <iframe title="Youtube Video Example" id="youtube-example-video" class="enable-video" data-enscribe="youtube"
-        data-enscribe-VTT-path="../vtt/the-light-that-burned--ad.en.vtt" data-enscribe-global-pause="true"
+        data-enscribe-VTT-path="vtt/the-light-that-burned--ad.en.vtt" data-enscribe-global-pause="true"
         src="https://www.youtube.com/embed/Rju8qyPwngM?enablejsapi=1&rel=0&app=desktop"  allowfullscreen></iframe>
     <button type="button" data-enscribe-ad-control-for="youtube-example-video" class="icon-audio-descriptions" role="switch" aria-label="Activate audio descriptions" aria-checked="false"></button>
 </div>
