@@ -29,6 +29,7 @@
   <li>Matthew Slavin for his redesign of the Enable Project's website in 2024, and to <a href="https://github.com/basiabaldwin">Basia Baldwin</a> and Travis Doughty for for implementing the redesign on the site. </li>
   <li><a href="https://github.com/alisonhall">Alison Hall</a> for cleaning up and streamlining the unit testing and automated testing NPM tasks (and also doing the difficult task of updating the NPM packages within the project in 2024).  She also added the Table of Contents component that appears on the top of almost every Enable page.</li>
   <li>Oluwaseun Longe for adding stylelint to Enable.</li>
+  <li>Sachin Manchanda for bug fixes to the  <a href="input-mask.php">input mask component</a>.</li>
   <li>Sahil Singh for unit tests for the <a href="input-mask.php">input mask component</a>.</li>
   <li>Noel Tibbles and Yash Narang for contributing to <a href="https://github.com/PublicisSapient/enable-a11y-react">the React version of Enable</a> (still in beta).  Noel has also created the <a href="https://github.com/PublicisSapient/enable-a11y-web-components">Enable's HTML5 Web Components</a>, also in beta.</li>
   <li><a href="https://github.com/saumyajitc">Saumyajit Chowdhury</a> for implementing deployment procedures in <a href="https://enable-a11y-react-iqpmwl8kb-publicis-sapient-sandbox.vercel.app/">Vercel</a> for <a href="https://github.com/PublicisSapient/enable-a11y-react">the React version of Enable</a> and create npm package for external use of the accessible components.</li>
