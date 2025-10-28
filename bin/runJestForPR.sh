@@ -32,4 +32,4 @@ do
     fi
 done
 
-node  node_modules/jest/bin/jest.js --run-in-band  --runInBand $TEST_FILES
+node  node_modules/jest/bin/jest.js   --runInBand $TEST_FILES
