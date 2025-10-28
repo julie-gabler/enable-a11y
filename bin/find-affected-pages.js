@@ -17,7 +17,7 @@
  *   --match <mode>          Matching mode: "suffix" (default) or "basename"
  *   --exts <csv>            Extra HTML-like extensions to include (default: ".html,.htm")
  *   --results-relative      Output only filenames (no paths) for pages and assets
- *   --just-pages            Output only the list of affected pages (no assets)
+ *   --just-pages            Output only the list of affected pages (no assets like js or CSS files)
  *   --quiet                 Machine-friendly output:
  *                            - default: CSV "page,assets"
  *                            - with --just-pages: one page per line

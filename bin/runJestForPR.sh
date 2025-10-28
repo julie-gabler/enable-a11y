@@ -19,11 +19,17 @@ PHP_FILES_AFFECTED=`node bin/find-affected-pages.js \
   --quiet --just-pages --results-relative \
   --match basename \
   --files "$(git diff --name-only origin/main...HEAD | paste -sd, -)"
-  --add-prefix= `
+  `
 
+POSSIBLE_TEST_FILES=`echo "$PHP_FILES_AFFECTED" | sed "s/.php/.test.js/"`
+TEST_FILES=""
 
+for i in $POSSIBLE_TEST_FILES
+do
+    if [ -f "js/test/$i" ]
+    then
+        TEST_FILES="$TEST_FILES $i"
+    fi
+done
 
-LIST="$BASE_PHP_LIST
-$PHP_FILES_AFFECTED"
-
-echo "$LIST" | sort -u | awk -v myip="$MYIP" '{printf ("http://%s:8888/%s\n", myip, $1)}'
+node  node_modules/jest/bin/jest.js   --runInBand $TEST_FILES
