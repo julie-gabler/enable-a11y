@@ -19,6 +19,10 @@
 # 100 - VNU checks returns errors
 # 101 - aXe returned errors
 # 102 - pa11y returned errors
+#
+#
+# Arguments:
+# checkHTML.sh all --for-pr : Just check files relevant for the PR.
 #######################################################################
 
 echo "PATH is $PATH"
@@ -26,28 +30,16 @@ which axe
 
 VNU_JAR="node_modules/vnu-jar/build/dist/vnu.jar"
 VNU_CMD="java -jar $VNU_JAR"
+TEMPLIST_FILE="tmp/temp-files.txt"
+JUST_FOR_PR="0"
 
-which ifconfig 1>&2 2> /dev/null
-if [ "$?" = "0" ]
+if [ "$2" = "--for-pr" ]
 then
-	MYIP=`ifconfig -a | grep inet | grep -v inet6 | awk '{print $2}' | head -2 | tail -1`
-else
-	id=$(netsh interface show interface | grep "Connected" | awk '{print $4}')
-	MYIP=$(ipconfig | awk -v desc="$id" '
-		BEGIN {found=0}
-		{
-			if ($0 ~ desc) {
-			found=1
-			} else if ($0 ~ /^[^ ]/ && found) {
-				found=0
-			}
-			if (found && /IPv4 Address/) {
-				gsub(/.*: /, "", $0)
-				print $0
-				exit
-			}
-		}')
+	echo "Just running tests for this PR"
+	JUST_FOR_PR="1"
 fi
+
+MYIP=`bin/my-ip.sh`
 PROJECT_URL="http://$MYIP:8888/index.php"
 SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 PHP=`bin/findPHP.sh`
@@ -229,7 +221,13 @@ checkDependencies() {
 downloadHTML() {
 	checkDependencies
 
-	URLS=`bin/getPages.js $MYIP`;
+	if [ "$JUST_FOR_PR" = "0" ]
+	then
+		URLS=`bin/getPages.js $MYIP`;
+	else
+		URLS=`bin/pages-affected-in-PR.sh`
+	fi
+
 	DOWNLOADED_URLS=""
 	TEMP_FILES=""
 
@@ -269,19 +267,20 @@ downloadHTML() {
 	echo
 
 	printf "%s\n" $DOWNLOADED_URLS > tmp/downloaded-urls.txt
-	echo -n $TEMP_FILES > tmp/temp-files.txt
+	echo -n $TEMP_FILES > $TEMPLIST_FILE
 	echo -n $AXE_DELAYED_FILES > tmp/axe-delayed-files.txt
 }
 
 
 runVNUTests() {
+	echo "Running VNU Tests ..."
 	#. Download the HTML files if they have not already been downloaded
-	if ! [ -f tmp/temp-files.txt ]
+	if ! [ -f $TEMPLIST_FILE ]
 	then
 		bin/generateSiteMap.sh
 		downloadHTML
 	else
-		: "${TEMP_FILES:=`cat tmp/temp-files.txt`}"
+		: "${TEMP_FILES:=`cat $TEMPLIST_FILE`}"
 	fi
 	numTempFiles=$(echo "${TEMP_FILES}" | awk -F" " '{print NF}')
 
@@ -483,7 +482,7 @@ function runLighthouseTests() {
 	node bin/lighthouse-accessibility-scan.js
 }
 
-if [ "$#" = "1" ]
+if [ "$#" = "2" ]
 then
 	TYPE="$1"
 	FILES="${@:2}"
@@ -503,6 +502,8 @@ fi
 #.. Run checks and preparation for tests
 bin/generateSiteMap.sh
 downloadHTML
+
+echo "TYPE: $TYPE"
 
 
 #.. Run specific tests based on the argument passed in when running this script
@@ -530,4 +531,3 @@ then
 	rm tmp/* 2> /dev/null
 fi
 
-echo "DOWNLOADED_URLS: $DOWNLOADED_URLS"
