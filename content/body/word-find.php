@@ -1,0 +1,124 @@
+
+<h1>WordFind.js by BunKat &amp; Lucas-C</h1>
+
+<div id="main" role="main">
+    <p class="instructions" id="instructions">
+        Find the words in the wordlist.  You can select the first and last letters of words when you find words.  
+        Keyboard and screen reader users can changing the tabbing order by clicking on a selected letter multiple times.
+    </p>
+        <div role="group" aria-label="Puzzle" aria-describedby="instructions">
+            <table>
+                <thead class="sr-only">
+                    <th scope="col"></th>
+                    <th scope="col" id="col1">Column 1</th>
+                    <th scope="col" id="col2">Column 2</th>
+                    <th scope="col" id="col3">Column 3</th>
+                    <th scope="col" id="col4">Column 4</th>
+                    <th scope="col" id="col5">Column 5</th>
+                    <th scope="col" id="col6">Column 6</th>
+                    <th scope="col" id="col7">Column 7</th>
+                </thead>
+                <tbody id="puzzle">
+
+                </tbody>
+            </table>
+        </div>
+        <ul id="words">
+            <li><button id="add-word">Add word</button></li>
+        </ul>
+        <fieldset id="controls">
+            <label for="allowed-missing-words">Allowed missing words :
+                <input id="allowed-missing-words" type="number" min="0" max="5" step="1" value="2">
+            </label>
+            <label for="max-grid-growth">Max grid growth :
+                <input id="max-grid-growth" type="number" min="0" max="5" step="1" value="0">
+            </label>
+            <label for="extra-letters">Extra letters :
+                <select id="extra-letters">
+                    <option value="secret-word" selected>form a secret word</option>
+                    <option value="none">none, allow blanks</option>
+                    <option value="secret-word-plus-blanks">form a secret word but allow for extra blanks</option>
+                    <option value="random">random</option>
+                </select>
+            </label>
+            <label for="secret-word">Secret word :
+                <input id="secret-word">
+            </label>
+            <button id="create-grid">Create grid</button>
+            <p id="result-message"></p>
+            <button id="solve">Solve Puzzle</button>
+        </fieldset>
+    </div>
+    <div id="alert" aria-live="assertive" aria-atomic="true"></div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+<script src="../../js/modules/word-find/wordfind.js"></script> 
+<script src="../../js/modules/word-find/wordfindgame.table.kb.mobile.navfocus.js"></script>
+<script>
+    /* Example words setup */
+    [
+        /*'adorable',
+        'comique',
+        'curieuse',
+        'drole',
+        'engagee',
+        'enjouee',
+        'fidele',
+        'futee',
+        'radieuse',
+        'sensible',
+        'sincere',*/
+        'complex',
+        'creative',
+        'elegant',
+        'farce',
+        'jovial',
+        'motive',
+        'ordinate',
+        'prudent',
+        'news',
+        'tender',
+    ].map(word => WordFindGame.insertWordBefore($('#add-word').parent(), word));
+    $('#secret-word').val('LAETITIA');
+
+    /* Init */
+    function recreate() {
+        $('#result-message').removeClass();
+        var fillBlanks, game;
+        if ($('#extra-letters').val() === 'none') {
+            fillBlanks = false;
+        } else if ($('#extra-letters').val().startsWith('secret-word')) {
+            fillBlanks = $('#secret-word').val();
+        }
+        try {
+            game = new WordFindGame('#puzzle', {
+                allowedMissingWords: +$('#allowed-missing-words').val(),
+                maxGridGrowth: +$('#max-grid-growth').val(),
+                fillBlanks: fillBlanks,
+                allowExtraBlanks: ['none', 'secret-word-plus-blanks'].includes($('#extra-letters').val()),
+                maxAttempts: 100,
+                width: 12,
+                height: 12
+            });
+        } catch (error) {
+            $('#result-message').text(`😞 ${error}, try to specify less ones`).css({color: 'red'});
+            throw(error);
+            return;
+        }
+        wordfind.print(game);
+        if (window.game) {
+            var emptySquaresCount = WordFindGame.emptySquaresCount();
+            $('#result-message').text(`😃 ${emptySquaresCount ? 'but there are empty squares' : ''}`).css({color: ''});
+        }
+        window.game = game;
+    }
+    recreate();
+
+    /* Event listeners */
+    $('#extra-letters').change((evt) => $('#secret-word').prop('disabled', !evt.target.value.startsWith('secret-word')));
+
+    $('#add-word').click( () => WordFindGame.insertWordBefore($('#add-word').parent()));
+
+    $('#create-grid').click(recreate);
+
+    $('#solve').click(() => game.solve());
+</script>

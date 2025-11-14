@@ -43,6 +43,7 @@ https://www.useragentman.com/enable/spinner.php
 https://www.useragentman.com/enable/status.php
 https://www.useragentman.com/enable/switch.php
 https://www.useragentman.com/enable/table.php
+https://www.useragentman.com/enable/word-search.php
 https://www.useragentman.com/enable/sortable-table.php
 https://www.useragentman.com/enable/pagination-table.php
 https://www.useragentman.com/enable/reflow.php

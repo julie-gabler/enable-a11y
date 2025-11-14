@@ -728,6 +728,15 @@
     "title": "Simple Accessible Tables",
     "desc": "Learn the small things you didn't know were needed for HTML5 tables. Also learn how to make sortable and paginated tables accessible to everyone."
   },
+  "word-find.php": {
+    "sectionPages": [
+      {
+        "content": "Games"
+      }
+    ],
+    "title": "Accessible Word Finder",
+    "desc": "Discover how to implement an Accessible Word Search game that works with both keyboard and screen readers."
+  },
   "sortable-table.php": {
     "sectionPages": [
       {

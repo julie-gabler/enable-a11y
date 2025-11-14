@@ -25,7 +25,11 @@
     "./spinbutton": "./js/modules/spinbutton.js",
     "./switch": "./js/modules/switch.js",
     "./tabs": "./js/modules/tabs.js",
-    "./tooltip": "./js/modules/tooltip.js"
+    "./tooltip": "./js/modules/tooltip.js",
+    "./word-find": [
+      "./js/modules/word-find/wordfind.js",
+      "./js/modules/word-find/wordfindgame.table.kb.mobile.navfocus.js"
+    ]
   },
   "files": [
     "css",

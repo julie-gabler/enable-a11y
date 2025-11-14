@@ -1,0 +1,194 @@
+:root {
+  --focus-color: #097efb;
+  --focus-color-dark-bg: #3b99fc;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --focus-color: #3b99fc;
+    --focus-color-dark-bg: #097efb;
+  }
+}
+/**
+* Wordfind.js 0.0.1
+* (c) 2012 Bill, BunKat LLC.
+* Wordfind is freely distributable under the MIT license.
+* For all details and documentation:
+*     http://github.com/bunkat/wordfind
+*/
+body {
+  font: 1em Arial;
+  color: red !important;
+}
+p {
+  font: 22pt sans-serif;
+  margin: 20px 20px 0px 20px;
+}
+h1 {
+  text-align: center;
+  /* to center #puzzle on small devices */
+}
+#main {
+  margin: 0 auto;
+  max-width: 80rem;
+  text-align: center;
+  /* to center #puzzle on small devices */
+}
+@media only screen and (min-width: 600px) {
+  #main {
+    text-align: left;
+  }
+}
+/**
+  * Styles for the puzzle
+  */
+#puzzle {
+  display: inline-block;
+  border: 1px solid black;
+  padding: 3vw;
+}
+#puzzle > div {
+  /* rows */
+  width: 100%;
+  margin: 0 auto;
+}
+/* style for each square in the puzzle */
+.puzzleSquare {
+  height: 7vw;
+  width: 7vw;
+  text-transform: uppercase;
+  background-color: white;
+  border: 0;
+  font: 5vw sans-serif;
+}
+@media only screen and (min-width: 600px) {
+  #puzzle {
+    float: left;
+    padding: 1rem;
+  }
+  .puzzleSquare {
+    height: 3.5rem;
+    width: 3.5rem;
+    font: 2.5rem sans-serif;
+  }
+}
+button::-moz-focus-inner {
+  border: 0;
+}
+/* indicates when a square has been selected */
+#puzzle .selected {
+  background-color: orange;
+}
+/* indicates that the square is part of a word that has been found */
+#puzzle .found {
+  background-color: blue;
+  color: white;
+}
+#puzzle .solved {
+  background-color: purple;
+  color: white;
+}
+/* indicates that all words have been found */
+#puzzle .complete {
+  background-color: green;
+}
+/**
+  * Styles for the word list
+  */
+#words {
+  display: inline-block;
+  max-width: 30rem;
+  padding: 1em;
+  list-style-type: none;
+  text-align: left;
+}
+@media only screen and (min-width: 600px) {
+  #words {
+    -moz-column-count: 2;
+    -webkit-column-count: 2;
+    column-count: 2;
+    column-gap: 20px;
+  }
+}
+#words li {
+  padding: 3px 0;
+  font: 1em sans-serif;
+}
+/* indicates that the word has been found */
+.wordFound {
+  text-decoration: line-through;
+  color: gray;
+}
+/**
+  * Styles for the controls
+  */
+#controls {
+  display: inline-block;
+  max-width: 30rem;
+  padding: 1em;
+  border: none;
+  text-align: left;
+}
+label {
+  white-space: nowrap;
+  margin-top: 1em;
+}
+input {
+  border: none;
+  border-bottom: 1px solid #ccc;
+  font-size: 1em;
+}
+input[type="number"] {
+  width: 2rem;
+}
+select {
+  max-width: 10rem;
+}
+#create-grid,
+#solve {
+  display: block;
+  margin-top: 1rem;
+}
+#secret-word {
+  text-transform: uppercase;
+}
+#result-message {
+  font-size: 1.2em;
+}
+button[tabindex="-1"][aria-hidden="true"] {
+  opacity: 0.2;
+}
+button {
+  position: relative;
+  z-index: 0;
+}
+button:focus-visible {
+  z-index: 1;
+}
+.instructions {
+  font-size: 1.2rem;
+  margin-bottom: 1.2rem;
+}
+/* Reveal the SR d-pad when it receives focus (otherwise keep it SR-only) */
+.sr-dpad:focus-within {
+  position: static !important;
+  clip: auto !important;
+  width: auto !important;
+  height: auto !important;
+  margin: 0 !important;
+  overflow: visible !important;
+  white-space: normal !important;
+}
+/* Table-based grid support */
+#puzzle table {
+  border-collapse: collapse;
+  border: 0;
+}
+#puzzle td {
+  padding: 0;
+  margin: 0;
+  border: 0;
+}
+#puzzle td > .puzzleSquare {
+  display: inline-block;
+}
+/*# sourceMappingURL=word-search.css.map */
